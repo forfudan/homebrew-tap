@@ -28,6 +28,12 @@ class Yumete < Formula
 
   def install
     bin.install "bin/yumete"
+    # **Both names, because the README promises both.** 「It installs under both
+    # names: `yumete`, and `ye` for the one you actually type」 — and until
+    # 2026-09-16 the formula installed one, so everyone who arrived by `brew`
+    # found that sentence to be false. A symlink rather than a second copy: it
+    # is the same 8 MB binary and it must not be possible for the two to differ.
+    bin.install_symlink bin/"yumete" => "ye"
     # ⚠️ **Not `pkgshare`.** `pkgshare` *is* `share/yumete`, and that is the
     # directory yumete scans for 宇浩 IME data (`installed_data_dirs`) — the
     # one a separate `yume-data` formula links its tables into so that the two
