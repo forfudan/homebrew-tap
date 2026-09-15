@@ -1,0 +1,67 @@
+class Yumete < Formula
+  desc "CJK-aware terminal editor for Chinese prose, with the Yume IME built in"
+  homepage "https://github.com/forfudan/yumete"
+  license "Apache-2.0"
+  version "0.1.0"
+
+  # The URLs interpolate `version`, so a release bump is the version above and
+  # the three checksums below. Each tarball's SHA-256 is published beside it on
+  # the release as `<name>.tar.gz.sha256` — `scripts/update-yumete.sh` fetches
+  # them and rewrites this file.
+  on_macos do
+    on_arm do
+      url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-darwin-arm64.tar.gz"
+      sha256 "6752117f06d3d273c3043694e154c12c643889c9465fe66c999366c609c4a052"
+    end
+  end
+
+  on_linux do
+    on_intel do
+      url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-x86_64.tar.gz"
+      sha256 "6bb463e79ab6eb4dc81b33695d95fd766e0beabc1ac62b6ea2e2c1f0a7d009d8"
+    end
+    on_arm do
+      url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-aarch64.tar.gz"
+      sha256 "f04b04a765d77d4fd1c08589dbd6e1618a577d788e9d140466d2a1088c193f5e"
+    end
+  end
+
+  def install
+    bin.install "bin/yumete"
+    # ⚠️ **Not `pkgshare`.** `pkgshare` *is* `share/yumete`, and that is the
+    # directory yumete scans for 宇浩 IME data (`installed_data_dirs`) — the
+    # one a separate `yume-data` formula links its tables into so that the two
+    # meet in one prefix. Putting documentation there is how the two formulae
+    # would come to fight over the same links.
+    doc.install "README.md", "LICENSE", "CHANGELOG.md"
+    doc.install "docs/manual.md"
+  end
+
+  def caveats
+    <<~EOS
+      yumete types 漢字 out of the box: the binary carries 靈明精華版, a cut of
+      宇浩's 碼表 covering every character in CJK 基本區 and 擴展A.
+
+      For the full experience — 詞組, the language model behind 整句 input, and
+      the 拆分 annotations — install the data as well:
+
+        brew install forfudan/tap/yume-data
+
+      A machine that already runs the 宇浩 input method needs nothing: yumete
+      finds its tables where the app put them.
+
+      The manual is at:
+        #{doc}/manual.md
+    EOS
+  end
+
+  test do
+    # The version the tarball is named for is the version inside it.
+    assert_match "yumete #{version}", shell_output("#{bin}/yumete --version")
+
+    # …and it draws a page. `--shot` runs the whole launch without a terminal,
+    # so this catches a binary that starts and then cannot render.
+    (testpath/"a.md").write("那年冬天。\n")
+    assert_match "那年冬天", shell_output("#{bin}/yumete --shot=40x6 #{testpath}/a.md")
+  end
+end
