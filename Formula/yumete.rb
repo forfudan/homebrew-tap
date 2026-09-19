@@ -1,8 +1,8 @@
 class Yumete < Formula
   desc "CJK-aware terminal editor for Chinese prose, with the Yume IME built in"
   homepage "https://github.com/forfudan/yumete"
-  license "Apache-2.0"
   version "0.2.0"
+  license "Apache-2.0"
 
   # The URLs interpolate `version`, so a release bump is the version above and
   # the three checksums below. Each tarball's SHA-256 is published beside it on
