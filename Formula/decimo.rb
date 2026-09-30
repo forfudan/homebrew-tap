@@ -1,8 +1,8 @@
 class Decimo < Formula
   desc "Arbitrary-precision calculator"
   homepage "https://github.com/forfudan/decimo"
+  version "0.15.0"
   license "Apache-2.0"
-  version "0.14.0"
 
   # The URLs interpolate `version`, so a release bump is the version above
   # and the three checksums below. Each tarball's SHA-256 is published beside
@@ -10,18 +10,18 @@ class Decimo < Formula
   on_macos do
     on_arm do
       url "https://github.com/forfudan/decimo/releases/download/v#{version}/decimo-#{version}-darwin-arm64.tar.gz"
-      sha256 "e8d033284ef6b02bd52c511d341741a929cd2927a599182d3e550b6aaec2c259"
+      sha256 "6b91b1483acc0bb99f718ece7db22332a6a563c9d01486275f5d4f250b3616a1"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/forfudan/decimo/releases/download/v#{version}/decimo-#{version}-linux-x86_64.tar.gz"
-      sha256 "85534ee156cefffd4d3a9a2a6fdc9bbc47dbd4c83881637b7c299dc33fb784d7"
+      sha256 "8071a12ef43c7dea8aec799b862f1a1da91a2bd7a80c341adbfad53b2bb7364c"
     end
     on_arm do
       url "https://github.com/forfudan/decimo/releases/download/v#{version}/decimo-#{version}-linux-aarch64.tar.gz"
-      sha256 "42e4f57751d5698d790d4a8ff4bbe4e505544400f496e585018ca412fb60d94a"
+      sha256 "eb935778fdec8e9a8d50805d3e08a408d602a418e62b9e4b87939bd76c1dcd67"
     end
   end
 
