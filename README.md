@@ -53,29 +53,29 @@ user's machine.
 
 ## Maintaining
 
-Updating a formula for a new release.
+Updating a formula for a new release. Each formula has a script that rewrites
+it from the release's own `.sha256` files and shows the diff without
+committing:
+
+```bash
+scripts/update-decimo.sh 0.15.0     # rewrites Formula/decimo.rb
+scripts/update-yumete.sh 0.3.0      # rewrites Formula/yumete.rb
+```
+
+Either one refuses to write unless all three `.sha256` files arrived and all
+three are 64 hex digits. One stale checksum installs the wrong binary on one
+platform and nowhere else, which is the hardest kind to notice.
 
 The release has to carry its tarballs first. `decimo` attaches them by itself
 when a release is published, so check that they are there rather than assuming
-it. Then read the checksums from the `.sha256` files published beside them:
+it.
+
+The `.sha256` files are what the release says; check that the tarballs really
+hash to the same thing. This is where a bad release goes wrong, and the error
+a user gets is unhelpful:
 
 ```bash
 V=0.15.0
-for t in darwin-arm64 linux-x86_64 linux-aarch64; do
-  printf "%-14s " "$t"
-  gh release download "v$V" --repo forfudan/decimo \
-    -p "decimo-$V-$t.tar.gz.sha256" -O - | awk '{print $1}'
-done
-```
-
-In `Formula/decimo.rb`, change the `version` line and the three `sha256`
-lines. The URLs interpolate `version`, so they need no edit.
-
-Check that each URL really downloads and really hashes to what the formula
-now claims. This is where a bad release goes wrong, and the error a user gets
-is unhelpful:
-
-```bash
 for t in darwin-arm64 linux-x86_64 linux-aarch64; do
   printf "%-14s " "$t"
   curl -sL "https://github.com/forfudan/decimo/releases/download/v$V/decimo-$V-$t.tar.gz" \
@@ -83,8 +83,8 @@ for t in darwin-arm64 linux-x86_64 linux-aarch64; do
 done
 ```
 
-Then commit, push, and install it for real: `brew update && brew upgrade
-decimo`, and run the binary.
+Run `brew style Formula/decimo.rb` before committing. Then commit, push, and
+install it for real: `brew update && brew upgrade decimo`, and run the binary.
 
 ### Never rewrite a pushed commit here
 
@@ -113,16 +113,3 @@ git -C "$(brew --repository)/Library/Taps/forfudan/homebrew-tap" \
 ## License
 
 Apache-2.0 (matches the upstream tools).
-
-## Releasing a new `yumete`
-
-The formula pins a version and three checksums. Both come from the release:
-
-```bash
-scripts/update-yumete.sh 0.1.0     # rewrites Formula/yumete.rb, shows the diff
-git commit -am 'Update yumete to v0.1.0' && git push
-```
-
-It refuses to write unless all three `.sha256` files arrived and all three are
-64 hex digits — one stale checksum installs the wrong binary on one platform
-and nowhere else, which is the hardest kind to notice.
