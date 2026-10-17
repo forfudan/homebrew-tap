@@ -1,7 +1,7 @@
 class Yumete < Formula
   desc "CJK-aware terminal editor for Chinese prose, with the Yume IME built in"
   homepage "https://github.com/forfudan/yumete"
-  version "0.8.0"
+  version "0.9.0"
   license "Apache-2.0"
 
   # The URLs interpolate `version`, so a release bump is the version above and
@@ -11,18 +11,18 @@ class Yumete < Formula
   on_macos do
     on_arm do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-darwin-arm64.tar.gz"
-      sha256 "e76998a3d94ee39f341e188f9df44b2b5ba74016847284ddc006f76757c4a1ff"
+      sha256 "08c65e3647cf1502d0d08e152ddfea9c4112a833d9c543e4b4242b720f14d79e"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-x86_64.tar.gz"
-      sha256 "f2dc7af1437f33836fe90e2aacd3d64a9ead0aa173c90a744ad374c664cd8248"
+      sha256 "e4367a8dd17888330a9b87c27f6544353ddd704a0b2aefacfad30812e039e2f6"
     end
     on_arm do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-aarch64.tar.gz"
-      sha256 "c8daf4a1ca3ed6f72c43a896d5ad5e7c0fbd893a5192513d42812765a82ec931"
+      sha256 "7b73ac1a750bc4791f41e5ab3b414fd452db792a09bc342ecba489df7748e114"
     end
   end
 
@@ -39,7 +39,11 @@ class Yumete < Formula
     # one a separate `yume-data` formula links its tables into so that the two
     # meet in one prefix. Putting documentation there is how the two formulae
     # would come to fight over the same links.
-    doc.install "README.md", "LICENSE", "CHANGELOG.md"
+    # **The tarball carries three things** (yumete 0.9.0): the binary, the
+    # licence and the manual. The README and the changelog came out of it —
+    # they are a click away on the release page — so installing them from
+    # here would fail the moment the tarball arrived without them.
+    doc.install "LICENSE"
     doc.install "docs/manual.md"
   end
 
