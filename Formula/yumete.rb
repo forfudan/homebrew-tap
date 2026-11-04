@@ -39,12 +39,11 @@ class Yumete < Formula
     # one a separate `yume-data` formula links its tables into so that the two
     # meet in one prefix. Putting documentation there is how the two formulae
     # would come to fight over the same links.
-    # **The tarball carries three things** (yumete 0.9.0): the binary, the
-    # licence and the manual. The README and the changelog came out of it —
-    # they are a click away on the release page — so installing them from
-    # here would fail the moment the tarball arrived without them.
+    # **The tarball carries the binary, the licence and the theme licences**
+    # (yumete 0.17.0). The manual moved to https://yumete.shurufa.app/ and
+    # left the tarball, so a `doc.install` of it fails the whole install.
     doc.install "LICENSE"
-    doc.install "docs/manual.md"
+    doc.install "licenses"
   end
 
   def caveats
@@ -54,15 +53,12 @@ class Yumete < Formula
       in CJK 基本區 and 擴展A.
 
       For the full experience — words, the language model behind fluency mode,
-      and the chaifen annotations — install the data as well:
-
-        brew install forfudan/tap/yume-data
-
-      A machine that already runs the Yume input method needs nothing: yumete
-      finds its tables where the app put them.
+      and the chaifen annotations — install the Yume input method itself, or
+      point $YUMETE_DATA_DIR at a data directory. A machine that already runs
+      Yume needs nothing: yumete finds its tables where the app put them.
 
       The manual is at:
-        #{doc}/manual.md
+        https://yumete.shurufa.app/
     EOS
   end
 
