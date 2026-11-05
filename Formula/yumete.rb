@@ -1,7 +1,7 @@
 class Yumete < Formula
   desc "CJK-aware terminal editor for Chinese prose, with the Yume IME built in"
   homepage "https://github.com/forfudan/yumete"
-  version "0.18.2"
+  version "0.19.0"
   license "Apache-2.0"
 
   # The URLs interpolate `version`, so a release bump is the version above and
@@ -11,18 +11,18 @@ class Yumete < Formula
   on_macos do
     on_arm do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-darwin-arm64.tar.gz"
-      sha256 "0ff6638a9cda0f64fbe6941bc3d3821bcce43213f252326769c9e65fb135978d"
+      sha256 "a274dbd79f4a5ac51c1e4934216466ba828be7121669fdafedd0f36131c0d9c9"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-x86_64.tar.gz"
-      sha256 "ea5658b171ecc5ff623cd017a138c7b7dcfc4be0d131ad33ce1842ab4905fc25"
+      sha256 "937531059f36eae4cec1371b3f36e9141281dc2a13cbfc3e14ba222456796c18"
     end
     on_arm do
       url "https://github.com/forfudan/yumete/releases/download/v#{version}/yumete-#{version}-linux-aarch64.tar.gz"
-      sha256 "ceb6baf98537bce23401a5be23840cc71d4e5a1afd142a55d2b10f75a555f652"
+      sha256 "90495057739361b6c04a2d9e530df44f2e90abaa274a0162db5aa7bd096c1fb1"
     end
   end
 
